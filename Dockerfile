@@ -8,27 +8,15 @@ RUN apt-get update && apt-get install -y \
       ffmpeg \
       zip
 
-# which version and flavour of the audiobot to use
-ARG TS3_AUDIOBOT_RELEASE="0.11.0"
-ARG TS3_AUDIOBOT_FLAVOUR="TS3AudioBot_dotnet_core_3.1.zip"
+LABEL author="HuntersTavern" maintainer="contact@hunters-tavern.de"
 
-# download and install the TS3AudioBot in the specified version and flavour
-RUN mkdir -p /opt/TS3AudioBot \
-    && cd /opt/TS3AudioBot \
-    && curl -L https://github.com/Splamy/TS3AudioBot/releases/download/${TS3_AUDIOBOT_RELEASE}/${TS3_AUDIOBOT_FLAVOUR} -o TS3AudioBot.zip \
-    && unzip TS3AudioBot.zip
-
-# add user to run under
-RUN useradd -ms /bin/bash -u 998 ts3bot
-
-# make data directory and chown it to the ts3bot user
-RUN mkdir -p /data
-RUN chown -R ts3bot:nogroup /data
-
-# set user to ts3bot, we dont want to be root from now on
-USER ts3bot
+# set user to run under
+USER container
+ENV  USER=container HOME=/home/container
 
 # set the work dir to data, so users can properly mount their config files to this dir with -v /host/path/to/data:/data
-WORKDIR /data
+WORKDIR     /home/container
 
-CMD ["dotnet", "/opt/TS3AudioBot/TS3AudioBot.dll", "--non-interactive"]
+COPY        ./entrypoint.sh /entrypoint.sh
+
+CMD         ["/bin/bash", "/entrypoint.sh"]
