@@ -19,7 +19,7 @@ RUN mkdir -p /opt/TS3AudioBot \
     && unzip TS3AudioBot.zip
 
 # add user to run under
-RUN useradd -ms /bin/bash -u 9999 ts3bot
+RUN useradd -ms /bin/bash -u 998 ts3bot
 
 # make data directory and chown it to the ts3bot user
 RUN mkdir -p /data
