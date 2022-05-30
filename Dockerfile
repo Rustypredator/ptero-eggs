@@ -15,6 +15,8 @@ ENV  USER=container HOME=/home/container
 
 WORKDIR /home/container
 
+ENV HTTPD_PREFIX=/home/container
+
 COPY ./entrypoint.sh /entrypoint.sh
 
 CMD ["/bin/bash", "/entrypoint.sh"]
