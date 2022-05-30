@@ -6,14 +6,7 @@
 FROM httpd
 
 # install all pre-requisites, these will be needed always
-RUN apt-get update && apt-get install -y \
-      openssl \
-      libopus-dev \
-      opus-tools \
-      ffmpeg \
-      zip
-      
-RUN adduser -D -h /home/container container
+RUN apt-get update && apt-get install -y openssl && adduser -D -h /home/container container
 
 MAINTAINER Rustypredator, <contact@rusty.info>
 
