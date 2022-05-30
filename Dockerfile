@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y \
       opus-tools \
       ffmpeg \
       zip
+      
+RUN adduser -D -h /home/container container
 
 MAINTAINER Rustypredator, <contact@rusty.info>
 
