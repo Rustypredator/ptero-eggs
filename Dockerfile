@@ -1,4 +1,9 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster
+# ----------------------------------
+# Pterodactyl Core Dockerfile
+# Environment: httpd
+# Minimum Panel Version: 0.6.0
+# ----------------------------------
+FROM httpd
 
 # install all pre-requisites, these will be needed always
 RUN apt-get update && apt-get install -y \
@@ -8,15 +13,13 @@ RUN apt-get update && apt-get install -y \
       ffmpeg \
       zip
 
-LABEL author="HuntersTavern" maintainer="contact@hunters-tavern.de"
+MAINTAINER Rustypredator, <contact@rusty.info>
 
-# set user to run under
 USER container
 ENV  USER=container HOME=/home/container
 
-# set the work dir to data, so users can properly mount their config files to this dir with -v /host/path/to/data:/data
-WORKDIR     /home/container
+WORKDIR /home/container
 
-COPY        ./entrypoint.sh /entrypoint.sh
+COPY ./entrypoint.sh /entrypoint.sh
 
-CMD         ["/bin/bash", "/entrypoint.sh"]
+CMD ["/bin/bash", "/entrypoint.sh"]
